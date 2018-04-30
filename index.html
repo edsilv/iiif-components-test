@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="uv/uv.css">
+    <script src="uv/lib/offline.js"></script>
+    <script src="uv/helpers.js"></script>
+    <script src="iiif-tree-component/iiif-tree-component.bundle.js"></script>
+    <title>UV Components Test</title>
+    <style>
+        #uv {
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+    <style href="iiif-tree-component/iiif-tree-component.css"></style>
+</head>
+<body>
+    
+    <div id="uv" class="uv"></div>
+
+    <div id="tree" class="iiif-tree-component">
+        loading...
+    </div>
+
+    <script>
+
+        var uv;
+        var manifestUrl = 'https://iiif-commons.github.io/iiif-av-component/examples/data/bl/sounds-tests/loose-ends/C1685_98_P3.json';
+
+        window.addEventListener('uvLoaded', function (e) {
+
+            uv = createUV('#uv', {
+                iiifResourceUri: manifestUrl,
+                configUri: 'uv-config.json'
+            }, new UV.URLDataProvider());
+
+            // get a IIIF helper for components on the page
+            Manifold.loadManifest({
+                iiifResourceUri: manifestUrl
+            }).then(function(helper){    
+                
+                var treecomponent = new IIIFComponents.TreeComponent({
+                    target: document.querySelector('#tree')
+                });
+
+                treecomponent.set({
+                    helper: helper
+                });
+
+                treecomponent.on('treeNodeSelected', function(node) {
+                    console.log('selected: ' + node.label);
+
+                    uv.set({
+                        rangeId: node.data.id
+                    });
+                });
+
+            }).catch(function() {
+                console.error('failed to load manifest');
+            });
+
+        }, false);
+
+    </script>
+
+    <script src="uv/uv.js"></script>
+</body>
+</html>

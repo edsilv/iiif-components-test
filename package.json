@@ -1,0 +1,26 @@
+{
+  "name": "iiif-components-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "rm -rf uv && cp -R node_modules/universalviewer/uv uv && cp -R node_modules/iiif-tree-component/dist iiif-tree-component",
+    "start": "http-server ./ -p 1234"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edsilv/iiif-components-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edsilv/iiif-components-test/issues"
+  },
+  "homepage": "https://github.com/edsilv/iiif-components-test#readme",
+  "dependencies": {
+    "http-server": "^0.11.1",
+    "universalviewer": "3.0.23",
+    "iiif-tree-component": "iiif-commons/iiif-tree-component#v1.1.6"
+  }
+}
